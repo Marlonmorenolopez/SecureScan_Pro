@@ -1,64 +1,79 @@
 # Proyecto de Grado SENA
-## Plataforma de Analisis de Seguridad Automatizado - SecureScan Pro
+
+## Plataforma de Análisis de Seguridad Automatizado - SecureScan Pro v3.0
 
 ---
 
-## Informacion del Proyecto
+## Información del Proyecto
 
-| Campo | Informacion |
-|-------|-------------|
-| **Nombre del Proyecto** | SecureScan Pro - Plataforma de Analisis de Seguridad |
-| **Programa de Formacion** | Tecnologia en Analisis y Desarrollo de Software / Seguridad Informatica |
-| **Centro de Formacion** | [Completar] |
-| **Regional** | [Completar] |
-| **Ficha** | [Completar] |
-| **Fecha de Presentacion** | [Completar] |
+| Campo                     | Información                                                             |
+| ------------------------- | ----------------------------------------------------------------------- |
+| **Nombre del Proyecto**   | SecureScan Pro - Plataforma de Análisis de Seguridad                    |
+| **Versión**               | 3.0.0 (Arquitectura Resiliente)                                         |
+| **Programa de Formación** | Tecnología en Análisis y Desarrollo de Software / Seguridad Informática |
+| **Centro de Formación**   | [Completar]                                                             |
+| **Regional**              | [Completar]                                                             |
+| **Ficha**                 | [Completar]                                                             |
+| **Fecha de Presentación** | [Completar]                                                             |
 
 ---
 
 ## Integrantes del Equipo
 
-| Nombre Completo | Documento | Rol en el Proyecto |
-|-----------------|-----------|-------------------|
-| [Nombre 1] | [CC] | Desarrollador Backend / Lider |
-| [Nombre 2] | [CC] | Desarrollador Frontend |
-| [Nombre 3] | [CC] | Documentacion / QA |
+| Nombre Completo | Documento | Rol en el Proyecto                                  |
+| --------------- | --------- | --------------------------------------------------- |
+| [Nombre 1]      | [CC]      | Desarrollador Backend / Arquitectura de Resiliencia |
+| [Nombre 2]      | [CC]      | Desarrollador Frontend / UX                         |
+| [Nombre 3]      | [CC]      | Documentación / QA / DevOps                         |
 
 ---
 
-## Instructor Lider
+## Instructor Líder
 
-| Nombre | Area |
-|--------|------|
-| [Nombre del Instructor] | [Area de Formacion] |
+| Nombre                  | Área                |
+| ----------------------- | ------------------- |
+| [Nombre del Instructor] | [Área de Formación] |
 
 ---
 
 # Resumen Ejecutivo
 
-## Descripcion del Proyecto
+## Descripción del Proyecto
 
-SecureScan Pro es una plataforma web integral para el analisis automatizado de vulnerabilidades de seguridad. La herramienta permite a profesionales de ciberseguridad, estudiantes y administradores de sistemas evaluar la postura de seguridad de aplicaciones web mediante la ejecucion orquestada de multiples herramientas de pentesting reconocidas en la industria.
+SecureScan Pro v3.0 es una plataforma web integral para el análisis automatizado de vulnerabilidades de seguridad con **arquitectura resiliente**. La herramienta permite a profesionales de ciberseguridad, estudiantes y administradores de sistemas evaluar la postura de seguridad de aplicaciones web mediante la ejecución orquestada de 6 herramientas de pentesting reconocidas, garantizando la continuidad del servicio incluso ante fallos parciales.
+
+## Innovación Principal v3.0: Arquitectura Resiliente
+
+La versión 3.0 introduce cuatro mecanismos de tolerancia a fallos que garantizan que un error en una herramienta no comprometa todo el escaneo:
+
+| Mecanismo            | Función                                  | Beneficio                          |
+| -------------------- | ---------------------------------------- | ---------------------------------- |
+| **Circuit Breaker**  | Aislamiento de fallos entre herramientas | No hay cascada de errores          |
+| **File Stabilizer**  | Espera de archivos de salida estables    | Elimina race conditions            |
+| **Target Validator** | Health-check TCP + whitelist             | Solo escanea objetivos autorizados |
+| **Process Manager**  | Gestión segura de procesos               | Limpieza automática de recursos    |
 
 ## Problema Identificado
 
-Las organizaciones enfrentan desafios significativos en la evaluacion de seguridad de sus aplicaciones web:
+Las organizaciones enfrentan desafíos significativos en la evaluación de seguridad de sus aplicaciones web:
 
-1. **Complejidad tecnica**: Las herramientas de seguridad requieren conocimiento especializado para su configuracion y uso.
-2. **Fragmentacion**: Los resultados de diferentes herramientas estan dispersos y en formatos incompatibles.
-3. **Tiempo**: Ejecutar multiples herramientas manualmente consume tiempo significativo.
-4. **Interpretacion**: Consolidar y priorizar hallazgos requiere experiencia avanzada.
-5. **Documentacion**: Generar reportes profesionales demanda esfuerzo adicional.
+1. **Complejidad técnica**: Las herramientas de seguridad requieren conocimiento especializado para su configuración y uso.
+2. **Fragmentación**: Los resultados de diferentes herramientas están dispersos y en formatos incompatibles.
+3. **Tiempo**: Ejecutar múltiples herramientas manualmente consume tiempo significativo.
+4. **Interpretación**: Consolidar y priorizar hallazgos requiere experiencia avanzada.
+5. **Documentación**: Generar reportes profesionales demanda esfuerzo adicional.
+6. **Fragilidad**: Las herramientas tradicionales fallan completamente si un componente falla.
 
-## Solucion Propuesta
+## Solución Propuesta
 
-SecureScan Pro automatiza el proceso completo de evaluacion de seguridad:
+SecureScan Pro v3.0 automatiza el proceso completo de evaluación de seguridad con tolerancia a fallos:
 
 - **Interfaz unificada**: Una sola plataforma web para gestionar todos los escaneos.
-- **Automatizacion completa**: Ejecucion secuencial y orquestada de 6 herramientas de seguridad.
-- **Consolidacion inteligente**: Agregacion de resultados con clasificacion por nivel de riesgo.
-- **Scoring automatico**: Calculo de puntuacion de vulnerabilidad basado en CVSS.
-- **Reportes profesionales**: Generacion automatica de informes tipo pentest.
+- **Automatización resiliente**: Ejecución orquestada con Circuit Breaker y recuperación automática.
+- **Consolidación inteligente**: Agregación de resultados con clasificación por nivel de riesgo (CVSS + EPSS).
+- **Scoring avanzado**: Cálculo de puntuación con Exploit Prediction Scoring System.
+- **Reportes profesionales**: Generación automática de informes en HTML, PDF, SARIF y JSON.
+- **Perfiles de escaneo**: Quick, Standard, Comprehensive y Passive según necesidades de tiempo.
 
 ---
 
@@ -66,422 +81,547 @@ SecureScan Pro automatiza el proceso completo de evaluacion de seguridad:
 
 ## Objetivo General
 
-Desarrollar una plataforma web que automatice el proceso de analisis de vulnerabilidades mediante la integracion de herramientas de ciberseguridad reconocidas, proporcionando reportes consolidados y accionables.
+Desarrollar una plataforma web resiliente que automatice el proceso de análisis de vulnerabilidades mediante la integración de herramientas de ciberseguridad reconocidas, proporcionando reportes consolidados y accionables con tolerancia a fallos parciales.
 
-## Objetivos Especificos
+## Objetivos Específicos
 
-1. **Disenar** una arquitectura modular que permita la integracion flexible de herramientas de seguridad.
+1. **Diseñar** una arquitectura modular resiliente con Circuit Breaker, File Stabilizer y Target Validator.
 
-2. **Implementar** modulos de integracion para Nmap, Nikto, Gobuster, OWASP ZAP, Wappalyzer y Searchsploit.
+2. **Implementar** módulos de integración para WhatWeb, Nmap, Gobuster, OWASP ZAP, ExploitDB y Metasploit (opcional).
 
-3. **Desarrollar** un sistema de orquestacion que ejecute las herramientas de forma secuencial y controlada.
+3. **Desarrollar** un sistema de orquestación que ejecute herramientas de forma secuencial con recuperación ante fallos.
 
-4. **Crear** un motor de scoring que clasifique vulnerabilidades segun su criticidad.
+4. **Crear** un motor de scoring que clasifique vulnerabilidades según CVSS 3.1 y EPSS.
 
-5. **Construir** un generador de reportes que produzca documentos profesionales en multiples formatos.
+5. **Construir** un generador de reportes que produzca documentos profesionales en múltiples formatos (HTML, PDF, SARIF, JSON).
 
-6. **Implementar** una interfaz web intuitiva para usuarios con diferentes niveles de experiencia.
+6. **Implementar** una interfaz web intuitiva con detección automática de aplicaciones SPA.
 
-7. **Configurar** un laboratorio de aplicaciones vulnerables para pruebas seguras y educacion.
+7. **Configurar** un laboratorio de aplicaciones vulnerables con 4 servicios (Juice Shop, DVWA, WebGoat, WebWolf).
 
-8. **Documentar** el proyecto de forma completa para facilitar su replicacion y mantenimiento.
+8. **Documentar** el proyecto de forma completa para facilitar su replicación y mantenimiento.
 
 ---
 
-# Justificacion
+# Justificación
 
 ## Importancia del Proyecto
 
 ### Para la Industria
-- El 43% de los ciberataques se dirigen a pequenas y medianas empresas (Verizon DBIR 2024).
+
+- El 43% de los ciberataques se dirigen a pequeñas y medianas empresas (Verizon DBIR 2024).
 - El costo promedio de una brecha de seguridad es de $4.45 millones USD (IBM, 2024).
 - La escasez de profesionales de ciberseguridad dificulta evaluaciones regulares.
+- Las herramientas existentes son frágiles: un fallo interrumpe todo el proceso.
 
-### Para la Educacion
-- Proporciona un entorno seguro para aprender tecnicas de pentesting.
-- Reduce la barrera de entrada para estudiantes de seguridad informatica.
+### Para la Educación
+
+- Proporciona un entorno seguro para aprender técnicas de pentesting.
+- Reduce la barrera de entrada para estudiantes de seguridad informática.
 - Permite practicar con aplicaciones vulnerables sin riesgo legal.
+- Demuestra conceptos avanzados de arquitectura resiliente (Circuit Breaker, etc.).
 
 ### Para Profesionales
-- Acelera el proceso de evaluacion inicial de seguridad.
-- Estandariza la metodologia de pruebas.
-- Automatiza la generacion de documentacion.
 
-## Alineacion con Competencias SENA
+- Acelera el proceso de evaluación inicial de seguridad.
+- Estandariza la metodología de pruebas.
+- Automatiza la generación de documentación.
+- Garantiza resultados incluso ante fallos parciales de herramientas.
+
+## Alineación con Competencias SENA
 
 Este proyecto desarrolla las siguientes competencias:
 
-| Competencia | Aplicacion |
-|-------------|------------|
-| Analizar requisitos del cliente | Levantamiento de requerimientos de seguridad |
-| Disenar sistemas de informacion | Arquitectura cliente-servidor modular |
-| Desarrollar sistemas de informacion | Implementacion backend/frontend |
-| Implementar seguridad informatica | Integracion de herramientas de pentesting |
-| Documentar procesos | Documentacion tecnica completa |
+| Competencia                         | Aplicación                                              |
+| ----------------------------------- | ------------------------------------------------------- |
+| Analizar requisitos del cliente     | Levantamiento de requerimientos de seguridad            |
+| Diseñar sistemas de información     | Arquitectura cliente-servidor modular resiliente        |
+| Desarrollar sistemas de información | Implementación backend/frontend con tolerancia a fallos |
+| Implementar seguridad informática   | Integración de herramientas de pentesting               |
+| Documentar procesos                 | Documentación técnica completa                          |
 
 ---
 
-# Marco Teorico
+# Marco Teórico
 
 ## Conceptos Fundamentales
 
-### Pruebas de Penetracion (Pentesting)
-Metodologia de evaluacion de seguridad que simula ataques reales para identificar vulnerabilidades. Se clasifican en:
+### Pruebas de Penetración (Pentesting)
+
+Metodología de evaluación de seguridad que simula ataques reales para identificar vulnerabilidades. Se clasifican en:
 
 - **Caja Negra**: Sin conocimiento previo del sistema.
-- **Caja Blanca**: Con acceso completo a documentacion y codigo.
+- **Caja Blanca**: Con acceso completo a documentación y código.
 - **Caja Gris**: Conocimiento parcial del sistema.
 
-### OWASP Top 10
-Lista de las 10 vulnerabilidades web mas criticas segun la Open Web Application Security Project:
+### OWASP Top 10 2021
+
+Lista de las 10 vulnerabilidades web más críticas según la Open Web Application Security Project:
 
 1. Broken Access Control
 2. Cryptographic Failures
 3. Injection
 4. Insecure Design
 5. Security Misconfiguration
-6. Vulnerable Components
-7. Authentication Failures
+6. Vulnerable and Outdated Components
+7. Identification and Authentication Failures
 8. Software and Data Integrity Failures
-9. Security Logging Failures
-10. Server-Side Request Forgery
+9. Security Logging and Monitoring Failures
+10. Server-Side Request Forgery (SSRF)
 
-### CVSS (Common Vulnerability Scoring System)
+### CVSS 3.1 (Common Vulnerability Scoring System)
+
 Sistema estandarizado para calificar la severidad de vulnerabilidades:
 
-| Rango | Severidad |
-|-------|-----------|
-| 0.0 | Ninguna |
-| 0.1 - 3.9 | Baja |
-| 4.0 - 6.9 | Media |
-| 7.0 - 8.9 | Alta |
-| 9.0 - 10.0 | Critica |
+| Rango      | Severidad | Color |
+| ---------- | --------- | ----- |
+| 0.0        | Ninguna   | ⚪    |
+| 0.1 - 3.9  | Baja      | 🟢    |
+| 4.0 - 6.9  | Media     | 🟡    |
+| 7.0 - 8.9  | Alta      | 🟠    |
+| 9.0 - 10.0 | Crítica   | 🔴    |
+
+### EPSS (Exploit Prediction Scoring System)
+
+Sistema que predice la probabilidad de que una vulnerabilidad sea explotada en la naturaleza, complementando CVSS con datos de amenazas reales.
 
 ## Herramientas Integradas
 
-### Nmap
-Escaner de red para descubrimiento de hosts y servicios. Detecta:
-- Puertos abiertos
-- Servicios activos
-- Versiones de software
-- Sistema operativo
+### WhatWeb (Reemplaza Wappalyzer en v3.0)
 
-### Nikto
-Escaner de vulnerabilidades web que verifica:
-- Archivos peligrosos
-- Versiones desactualizadas
-- Configuraciones inseguras
-- Mas de 6,700 items potencialmente peligrosos
+Identificador de tecnologías web nativo de Kali Linux:
+
+- CMS (WordPress, Drupal, etc.)
+- Frameworks (React, Angular, Vue.js, etc.)
+- Servidores web y sus versiones
+- Librerías JavaScript
+
+**Ventaja sobre Wappalyzer**: Más ligero, mejor integración con Kali, mayor base de firmas.
+
+### Nmap
+
+Escáner de red para descubrimiento de hosts y servicios:
+
+- Puertos abiertos y filtros
+- Servicios activos y versiones
+- Detección de sistema operativo
+- Scripts NSE (Nmap Scripting Engine) para vulnerabilidades
+
+**Integración v3.0**: XML de salida se procesa automáticamente por ExploitDB para búsqueda de exploits por versión de servicio.
 
 ### Gobuster
+
 Herramienta de fuerza bruta para:
-- Descubrimiento de directorios
-- Enumeracion de subdominios
-- Busqueda de archivos ocultos
 
-### OWASP ZAP
+- Descubrimiento de directorios y archivos
+- Enumeración de subdominios (modo dns)
+- Fuerza bruta de hosts virtuales (modo vhost)
+
+**Configuración v3.0**: 50 threads, extensiones configurables, wordlists de Kali Linux.
+
+### OWASP ZAP (Zed Attack Proxy)
+
 Proxy de seguridad que permite:
-- Escaneo pasivo automatico
+
+- Spider pasivo y activo de aplicaciones
 - Escaneo activo de vulnerabilidades
-- Fuzzing de parametros
-- Spider de aplicaciones
+- Fuzzing de parámetros
+- Soporte especial para SPAs (Single Page Applications)
 
-### Wappalyzer
-Identificador de tecnologias que detecta:
-- CMS (WordPress, Drupal, etc.)
-- Frameworks (React, Angular, etc.)
-- Servidores web
-- Librerias JavaScript
+**Innovación v3.0**: Detección automática de SPAs (React, Angular, Vue) y uso de spiderClient con navegador headless.
 
-### Searchsploit
-Interfaz de linea de comandos para Exploit-DB:
-- Busqueda de exploits conocidos
-- Base de datos de vulnerabilidades
-- Integracion con Metasploit
+### ExploitDB (Módulo Unificado)
+
+Interfaz de línea de comandos para Exploit-DB:
+
+- Búsqueda de exploits conocidos
+- Integración directa con resultados de Nmap XML
+- Enriquecimiento con datos del National Vulnerability Database (NVD)
+- Filtrado de exploits DoS
+
+**Cambio v3.0**: Reemplaza `exploitdb_lookup.js` con `exploitdb_unified.js` para integración seamless con Nmap.
+
+### Metasploit (Opcional)
+
+Framework de explotación con modo dry-run por defecto:
+
+- Verificación de viabilidad de exploits sin ejecución real
+- Integración RPC para automatización
+- Post-explotación controlada (deshabilitada por defecto)
+
+**Seguridad**: Modo `dryRun: true` por defecto. Requiere habilitación explícita para explotación real.
 
 ---
 
-# Metodologia de Desarrollo
+# Metodología de Desarrollo
 
 ## Modelo de Desarrollo
 
-Se utilizo **metodologia agil Scrum** adaptada:
+Se utilizó **metodología ágil Scrum** adaptada:
 
 ### Sprints Realizados
 
-| Sprint | Duracion | Entregables |
-|--------|----------|-------------|
-| Sprint 1 | 2 semanas | Arquitectura y diseno |
-| Sprint 2 | 2 semanas | Backend - Modulos de escaneo |
-| Sprint 3 | 2 semanas | Frontend - Interfaz web |
-| Sprint 4 | 2 semanas | Integracion y reportes |
-| Sprint 5 | 1 semana | Documentacion y pruebas |
+| Sprint   | Duración  | Entregables                                          |
+| -------- | --------- | ---------------------------------------------------- |
+| Sprint 1 | 2 semanas | Arquitectura resiliente y diseño de Circuit Breaker  |
+| Sprint 2 | 2 semanas | Backend - Módulos de escaneo con File Stabilizer     |
+| Sprint 3 | 2 semanas | Backend - Target Validator y Process Manager         |
+| Sprint 4 | 2 semanas | Frontend - Interfaz web y detección SPA              |
+| Sprint 5 | 2 semanas | Integración, reportes SARIF y pruebas de resiliencia |
+| Sprint 6 | 1 semana  | Documentación y optimización                         |
 
-## Tecnologias Utilizadas
+## Tecnologías Utilizadas
 
 ### Backend
-- **Node.js 18+**: Runtime de JavaScript
+
+- **Node.js 20 LTS**: Runtime de JavaScript
 - **Express.js**: Framework web
-- **Child Process**: Ejecucion de herramientas externas
+- **Child Process**: Ejecución de herramientas externas
+- **EventEmitter**: Arquitectura orientada a eventos para el orquestador
 
 ### Frontend
-- **Next.js 16**: Framework React
-- **Tailwind CSS**: Estilos utilitarios
-- **shadcn/ui**: Componentes de interfaz
+
+- **Next.js 16**: Framework React con App Router
+- **React 19**: Biblioteca de UI
+- **Tailwind CSS 4**: Estilos utilitarios
+- **shadcn/ui**: Componentes de interfaz (50+ componentes)
 
 ### Infraestructura
-- **Docker**: Contenedorizacion
-- **Docker Compose**: Orquestacion de contenedores
-- **Kali Linux**: Sistema operativo base
+
+- **Docker 24.x**: Contenerización
+- **Docker Compose 2.x**: Orquestación de contenedores
+- **Kali Linux**: Sistema operativo base con herramientas preinstaladas
 
 ### Herramientas de Desarrollo
-- **VS Code**: Editor de codigo
+
+- **VS Code**: Editor de código
 - **Git**: Control de versiones
-- **npm/pnpm**: Gestion de paquetes
+- **npm/pnpm**: Gestión de paquetes
 
 ---
 
 # Arquitectura del Sistema
 
-## Diagrama de Arquitectura
+## Diagrama de Arquitectura v3.0 (Resiliente)
 
-```
 ┌─────────────────────────────────────────────────────────────────┐
-│                        CAPA DE PRESENTACION                      │
-│  ┌─────────────────────────────────────────────────────────┐    │
-│  │                    Next.js Frontend                      │    │
-│  │  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌─────────┐ │    │
-│  │  │  Scanner │  │   Lab    │  │ History  │  │ Results │ │    │
-│  │  │   Page   │  │   Page   │  │   Page   │  │Dashboard│ │    │
-│  │  └──────────┘  └──────────┘  └──────────┘  └─────────┘ │    │
-│  └─────────────────────────────────────────────────────────┘    │
+│ CAPA DE PRESENTACIÓN │
+│ ┌─────────────────────────────────────────────────────────┐ │
+│ │ Next.js 16 Frontend │ │
+│ │ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌─────────┐ │ │
+│ │ │ Scanner │ │ Lab │ │ History │ │ Results │ │ │
+│ │ │ Page │ │ Page │ │ Page │ │Dashboard│ │ │
+│ │ └──────────┘ └──────────┘ └──────────┘ └─────────┘ │ │
+│ └─────────────────────────────────────────────────────────┘ │
 └─────────────────────────────────────────────────────────────────┘
-                              │
-                              │ HTTP/REST API
-                              ▼
+│
+│ HTTP/REST API
+▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                        CAPA DE NEGOCIO                           │
-│  ┌─────────────────────────────────────────────────────────┐    │
-│  │                   Express.js Backend                     │    │
-│  │  ┌────────────────────────────────────────────────────┐ │    │
-│  │  │                   Orchestrator                      │ │    │
-│  │  │  ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐  │ │    │
-│  │  │  │Wappalyzer│ │  Nmap   │ │Gobuster │ │  Nikto  │  │ │    │
-│  │  │  └─────────┘ └─────────┘ └─────────┘ └─────────┘  │ │    │
-│  │  │  ┌─────────┐ ┌─────────┐ ┌─────────────────────┐  │ │    │
-│  │  │  │   ZAP   │ │Searchspl│ │   Scoring Engine    │  │ │    │
-│  │  │  └─────────┘ └─────────┘ └─────────────────────┘  │ │    │
-│  │  └────────────────────────────────────────────────────┘ │    │
-│  │  ┌────────────────────────────────────────────────────┐ │    │
-│  │  │              Report Generator                       │ │    │
-│  │  └────────────────────────────────────────────────────┘ │    │
-│  └─────────────────────────────────────────────────────────┘    │
+│ CAPA DE NEGOCIO │
+│ ┌─────────────────────────────────────────────────────────┐ │
+│ │ Express.js Backend │ │
+│ │ ┌────────────────────────────────────────────────────┐ │ │
+│ │ │ SecureScan Orchestrator v3.0 │ │ │
+│ │ │ ┌──────────────────────────────────────────────┐ │ │ │
+│ │ │ │ MÓDULOS DE RESILIENCIA (Core) │ │ │ │
+│ │ │ │ ┌──────────┐ ┌──────────┐ ┌──────────┐ │ │ │ │
+│ │ │ │ │ Circuit │ │ File │ │ Target │ │ │ │ │
+│ │ │ │ │ Breaker │ │ Stabilizer│ │ Validator│ │ │ │ │
+│ │ │ │ └──────────┘ └──────────┘ └──────────┘ │ │ │ │
+│ │ │ │ ┌──────────────────────────────────────────┐ │ │ │ │
+│ │ │ │ │ Process Manager │ │ │ │ │
+│ │ │ │ └──────────────────────────────────────────┘ │ │ │ │
+│ │ │ └──────────────────────────────────────────────┘ │ │ │
+│ │ │ │ │ │
+│ │ │ ┌──────────────────────────────────────────────┐ │ │ │
+│ │ │ │ MÓDULOS DE ESCANEO (6 herramientas) │ │ │ │
+│ │ │ │ ┌─────────┐ ┌─────────┐ ┌─────────┐ │ │ │ │
+│ │ │ │ │WhatWeb │ │ Nmap │ │Gobuster │ │ │ │ │
+│ │ │ │ │(Tecnol.)│ │(Puertos)│ │ (Dirs) │ │ │ │ │
+│ │ │ │ └─────────┘ └─────────┘ └─────────┘ │ │ │ │
+│ │ │ │ ┌─────────┐ ┌─────────┐ ┌─────────┐ │ │ │ │
+│ │ │ │ │ ZAP │ │ExploitDB│ │Metasploit│ │ │ │ │
+│ │ │ │ │ (DAST) │ │(Exploits)│ │(Opcional)│ │ │ │ │
+│ │ │ │ └─────────┘ └─────────┘ └─────────┘ │ │ │ │
+│ │ │ └──────────────────────────────────────────────┘ │ │ │
+│ │ │ │ │ │
+│ │ │ ┌──────────────────────────────────────────────┐ │ │ │
+│ │ │ │ POST-PROCESAMIENTO (Scoring + Reports) │ │ │ │
+│ │ │ │ ┌──────────────┐ ┌──────────────────────┐ │ │ │ │
+│ │ │ │ │Scoring Engine│ │ Report Generator │ │ │ │ │
+│ │ │ │ │(CVSS+EPSS) │ │(HTML/PDF/SARIF/JSON) │ │ │ │ │
+│ │ │ │ └──────────────┘ └──────────────────────┘ │ │ │ │
+│ │ │ └──────────────────────────────────────────────┘ │ │ │
+│ │ └────────────────────────────────────────────────────┘ │ │
+│ └─────────────────────────────────────────────────────────┘ │
 └─────────────────────────────────────────────────────────────────┘
-                              │
-                              │ Shell / API
-                              ▼
+│
+│ Spawn / API / CLI
+▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                      CAPA DE HERRAMIENTAS                        │
-│  ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐   │
-│  │  Nmap   │ │  Nikto  │ │Gobuster │ │OWASP ZAP│ │Searchspl│   │
-│  └─────────┘ └─────────┘ └─────────┘ └─────────┘ └─────────┘   │
+│ CAPA DE HERRAMIENTAS │
+│ ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐ │
+│ │WhatWeb │ │ Nmap │ │Gobuster │ │OWASP ZAP│ │ExploitDB│ │
+│ └─────────┘ └─────────┘ └─────────┘ └─────────┘ └─────────┘ │
+│ ┌─────────┐ │
+│ │Metasploit│ (Opcional - RPC) │
+│ └─────────┘ │
 └─────────────────────────────────────────────────────────────────┘
-                              │
-                              │ Escaneo
-                              ▼
+│
+│ Docker Network (172.20.0.0/24)
+▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                    LABORATORIO VULNERABLE                        │
-│  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌───────┐ │
-│  │  Juice   │ │   DVWA   │ │ WebGoat  │ │  bWAPP   │ │Hackaz.│ │
-│  │   Shop   │ │  :3002   │ │  :3003   │ │  :3004   │ │ :3005 │ │
-│  │  :3001   │ │          │ │          │ │          │ │       │ │
-│  └──────────┘ └──────────┘ └──────────┘ └──────────┘ └───────┘ │
+│ LABORATORIO VULNERABLE │
+│ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐ │
+│ │ Juice │ │ DVWA │ │ WebGoat │ │ WebWolf │ │
+│ │ Shop │ │ :3002 │ │ :3003 │ │ :9090 │ │
+│ │ :3001 │ │ │ │ │ │ (Companion│ │
+│ └──────────┘ └──────────┘ └──────────┘ └──────────┘ │
 └─────────────────────────────────────────────────────────────────┘
-```
+plain
+Copy
 
-## Diagrama de Secuencia
+## Estados del Circuit Breaker
 
-```
-Usuario          Frontend         Backend        Herramientas      Target
-   │                │                │                │               │
-   │ Ingresa URL    │                │                │               │
-   │───────────────>│                │                │               │
-   │                │ POST /api/scan │                │               │
-   │                │───────────────>│                │               │
-   │                │    Job ID      │                │               │
-   │                │<───────────────│                │               │
-   │                │                │                │               │
-   │                │                │  Wappalyzer    │               │
-   │                │                │───────────────>│ HTTP Request  │
-   │                │                │                │──────────────>│
-   │                │                │  Technologies  │               │
-   │                │                │<───────────────│               │
-   │                │                │                │               │
-   │                │                │     Nmap       │               │
-   │                │                │───────────────>│  Port Scan    │
-   │                │                │                │──────────────>│
-   │                │                │  Ports/Versions│               │
-   │                │                │<───────────────│               │
-   │                │                │                │               │
-   │                │                │   Gobuster     │               │
-   │                │                │───────────────>│  Dir Brute    │
-   │                │                │                │──────────────>│
-   │                │                │  Directories   │               │
-   │                │                │<───────────────│               │
-   │                │                │                │               │
-   │                │                │     Nikto      │               │
-   │                │                │───────────────>│  Web Scan     │
-   │                │                │                │──────────────>│
-   │                │                │ Vulnerabilities│               │
-   │                │                │<───────────────│               │
-   │                │                │                │               │
-   │                │                │   OWASP ZAP    │               │
-   │                │                │───────────────>│ Active Scan   │
-   │                │                │                │──────────────>│
-   │                │                │    Alerts      │               │
-   │                │                │<───────────────│               │
-   │                │                │                │               │
-   │                │                │  Searchsploit  │               │
-   │                │                │───────────────>│               │
-   │                │                │    Exploits    │               │
-   │                │                │<───────────────│               │
-   │                │                │                │               │
-   │                │                │ [Consolidate & Score]          │
-   │                │                │ [Generate Report]              │
-   │                │                │                │               │
-   │                │ GET /status    │                │               │
-   │                │───────────────>│                │               │
-   │                │   Results      │                │               │
-   │                │<───────────────│                │               │
-   │   Resultados   │                │                │               │
-   │<───────────────│                │                │               │
-   │                │                │                │               │
-```
+┌─────────────────────────────────────────────────────────────┐
+│ CIRCUIT BREAKER LIFECYCLE │
+│ │
+│ ┌─────────┐ Fallo x N ┌─────────┐ │
+│ │ CLOSED │ ───────────────────────────► │ OPEN │ │
+│ │ (Normal)│ │(Bloqueo)│ │
+│ └────┬────┘ └────┬────┘ │
+│ ▲ │ │
+│ │ Éxito │ │
+│ │ ◄──────────────────────────────┘ │
+│ │ Timeout configurable │
+│ ┌────┴────┐ │
+│ │HALF_OPEN│ ◄── Permite N llamadas de prueba │
+│ │(Prueba) │ │
+│ └─────────┘ │
+│ │
+│ Configuración por herramienta: │
+│ • WhatWeb: 3 fallos / 60s timeout │
+│ • Nmap: 2 fallos / 120s timeout │
+│ • ZAP: 2 fallos / 300s timeout │
+│ • Metasploit: 1 fallo / 300s timeout (más conservador) │
+└─────────────────────────────────────────────────────────────┘
+plain
+Copy
+
+## Perfiles de Escaneo
+
+| Perfil            | Duración  | Herramientas                             | Uso                      |
+| ----------------- | --------- | ---------------------------------------- | ------------------------ |
+| **Quick**         | 5-10 min  | WhatWeb → Nmap (top 1000) → ZAP (spider) | Validación rápida, CI/CD |
+| **Standard**      | 20-30 min | + Gobuster → ExploitDB + Active Scan     | Auditoría regular        |
+| **Comprehensive** | 45-90 min | + Metasploit dry-run + DNS/VHost enum    | Evaluación completa      |
+| **Passive**       | 10-15 min | Sin active scan, solo reconocimiento     | Entornos sensibles       |
 
 ---
 
 # Resultados Obtenidos
 
-## Funcionalidades Implementadas
+## Funcionalidades Implementadas v3.0
 
-| Funcionalidad | Estado | Descripcion |
-|---------------|--------|-------------|
-| Escaneo Nmap | Completado | Deteccion de puertos y servicios |
-| Escaneo Nikto | Completado | Vulnerabilidades web |
-| Escaneo Gobuster | Completado | Descubrimiento de directorios |
-| Integracion ZAP | Completado | Escaneo activo de aplicaciones |
-| Deteccion Wappalyzer | Completado | Identificacion de tecnologias |
-| Busqueda Exploits | Completado | Integracion con Exploit-DB |
-| Sistema de Scoring | Completado | Clasificacion por riesgo |
-| Generador Reportes | Completado | HTML y Markdown |
-| Laboratorio Docker | Completado | 5 aplicaciones vulnerables |
-| Interfaz Web | Completado | Dashboard completo |
+| Funcionalidad         | Estado        | Descripción                                         |
+| --------------------- | ------------- | --------------------------------------------------- |
+| Escaneo WhatWeb       | ✅ Completado | Detección de tecnologías (reemplaza Wappalyzer)     |
+| Escaneo Nmap          | ✅ Completado | Puertos, servicios, versiones, scripts NSE          |
+| Escaneo Gobuster      | ✅ Completado | Directorios, subdominios, hosts virtuales           |
+| Escaneo ZAP           | ✅ Completado | DAST completo con soporte SPA                       |
+| Integración ExploitDB | ✅ Completado | Búsqueda automática desde Nmap XML                  |
+| Metasploit Opcional   | ✅ Completado | Modo dry-run por defecto                            |
+| Circuit Breaker       | ✅ Completado | Aislamiento de fallos entre herramientas            |
+| File Stabilizer       | ✅ Completado | Espera de archivos estables                         |
+| Target Validator      | ✅ Completado | Health-check TCP + whitelist                        |
+| Process Manager       | ✅ Completado | Cleanup automático de procesos                      |
+| Sistema de Scoring    | ✅ Completado | CVSS 3.1 + EPSS                                     |
+| Generador Reportes    | ✅ Completado | HTML, PDF, SARIF, JSON                              |
+| Laboratorio Docker    | ✅ Completado | 4 aplicaciones (Juice Shop, DVWA, WebGoat, WebWolf) |
+| Interfaz Web          | ✅ Completado | Dashboard con detección SPA                         |
 
-## Metricas del Proyecto
+## Métricas del Proyecto v3.0
 
-| Metrica | Valor |
-|---------|-------|
-| Lineas de codigo backend | ~3,500 |
-| Lineas de codigo frontend | ~2,000 |
-| Modulos desarrollados | 10 |
-| Herramientas integradas | 6 |
-| Aplicaciones vulnerables | 5 |
-| Documentos generados | 6 |
+| Métrica                   | Valor                          |
+| ------------------------- | ------------------------------ |
+| Líneas de código backend  | ~4,500                         |
+| Líneas de código frontend | ~2,200                         |
+| Módulos desarrollados     | 10 (8 escaneo + 2 resiliencia) |
+| Herramientas integradas   | 6 (7 con Metasploit opcional)  |
+| Clases de resiliencia     | 4 (embebidas en orquestador)   |
+| Aplicaciones vulnerables  | 4                              |
+| Formatos de reporte       | 4 (HTML, PDF, SARIF, JSON)     |
+| Perfiles de escaneo       | 4                              |
 
-## Pruebas Realizadas
+## Pruebas de Resiliencia Realizadas
 
-### Pruebas contra Juice Shop
-- **Puertos detectados**: 3001 (HTTP)
-- **Tecnologias**: Node.js, Express, Angular
-- **Vulnerabilidades encontradas**: 15
-- **Exploits relacionados**: 3
-- **Score final**: 7.2 (Alto)
+### Escenario 1: Fallo de Nmap
 
-### Pruebas contra DVWA
-- **Puertos detectados**: 3002 (HTTP)
-- **Tecnologias**: PHP, Apache, MySQL
-- **Vulnerabilidades encontradas**: 23
-- **Exploits relacionados**: 8
-- **Score final**: 8.5 (Alto)
+- **Condición**: Nmap interrumpido manualmente durante escaneo
+- **Resultado**: Circuit Breaker abrió circuito para Nmap, continuó con Gobuster y ZAP
+- **Score final**: Calculado con datos parciales (WhatWeb, Gobuster, ZAP disponibles)
+- **Estado**: ✅ ÉXITO - Escaneo completado con advertencias
+
+### Escenario 2: Target No Disponible
+
+- **Condición**: Intentar escanear puerto cerrado
+- **Resultado**: TargetValidator rechazó antes de iniciar herramientas
+- **Mensaje**: "No se puede conectar a localhost:9999 - Connection refused"
+- **Estado**: ✅ ÉXITO - Validación preventiva funcionó
+
+### Escenario 3: Archivo de Salida Incompleto
+
+- **Condición**: ZAP escribiendo reporte JSON lentamente
+- **Resultado**: FileStabilizer esperó 3 rondas estables antes de procesar
+- **Prevención**: Race condition evitada, parsing exitoso
+- **Estado**: ✅ ÉXITO - Estabilización correcta
+
+## Pruebas contra Laboratorio
+
+### Juice Shop (http://localhost:3001)
+
+- **Tecnologías detectadas**: Node.js, Express, Angular, SQLite
+- **Puertos**: 3001/tcp abierto
+- **Directorios encontrados**: /api, /rest, /socket.io (sensible)
+- **Vulnerabilidades ZAP**: 12 (2 High, 5 Medium, 5 Low)
+- **Exploits relacionados**: 2 (Express.js, Node.js)
+- **Score CVSS**: 7.2 (Alto)
+- **Duración escaneo Standard**: 18 minutos
+
+### DVWA (http://localhost:3002)
+
+- **Tecnologías detectadas**: PHP, Apache, MariaDB
+- **Puertos**: 3002/tcp, 3306/tcp (MySQL expuesto)
+- **Directorios encontrados**: /config, /hackable, /dvwa
+- **Vulnerabilidades ZAP**: 18 (3 High, 8 Medium, 7 Low)
+- **Exploits relacionados**: 5 (PHP, Apache, MySQL)
+- **Score CVSS**: 8.5 (Alto)
+- **Duración escaneo Standard**: 15 minutos
+
+### WebGoat (http://localhost:3003)
+
+- **Tecnologías detectadas**: Java, Spring Boot, WebGoat
+- **Puertos**: 3003/tcp, 9090/tcp (WebWolf)
+- **Directorios encontrados**: /WebGoat, /plugin_extracted
+- **Vulnerabilidades ZAP**: 8 (1 High, 4 Medium, 3 Low)
+- **Exploits relacionados**: 1 (Spring)
+- **Score CVSS**: 6.8 (Medio-Alto)
+- **Duración escaneo Standard**: 22 minutos (más lento por Java)
 
 ---
 
 # Conclusiones
 
-## Logros Alcanzados
+## Logros Alcanzados v3.0
 
-1. **Automatizacion exitosa**: Se logro integrar 6 herramientas de seguridad en un flujo automatizado.
+1. **Arquitectura resiliente implementada**: Los 4 mecanismos de tolerancia a fallos (Circuit Breaker, File Stabilizer, Target Validator, Process Manager) funcionan correctamente y garantizan que el escaneo continúe incluso si herramientas individuales fallan.
 
-2. **Interfaz intuitiva**: La plataforma es accesible para usuarios con diferentes niveles de experiencia.
+2. **Reemplazo exitoso de herramientas**: WhatWeb demostró ser más eficiente que Wappalyzer para el entorno Kali Linux, y la integración Nmap→ExploitDB elimina búsquedas manuales de exploits.
 
-3. **Reportes profesionales**: Los informes generados cumplen con estandares de la industria.
+3. **Soporte moderno para SPAs**: La detección automática de React/Angular/Vue.js permite escanear aplicaciones modernas que las herramientas tradicionales no manejan bien.
 
-4. **Ambiente seguro**: El laboratorio permite practicas sin riesgo legal.
+4. **Laboratorio completo**: 4 aplicaciones proporcionan cobertura de diferentes stacks tecnológicos (Node.js, PHP, Java) y niveles de dificultad.
 
-5. **Documentacion completa**: El proyecto es replicable y mantenible.
+5. **Reportes multi-formato**: La inclusión de SARIF permite integración con pipelines de CI/CD modernos (GitHub Advanced Security, GitLab SAST).
 
-## Limitaciones
+6. **Seguridad por diseño**: El modo dry-run de Metasploit y el whitelist de targets garantizan uso ético por defecto.
 
-1. **Dependencia de herramientas externas**: Requiere instalacion de multiples herramientas.
+## Limitaciones y Mitigaciones
 
-2. **Tiempo de escaneo**: Escaneos completos pueden tomar 15-30 minutos.
-
-3. **Falsos positivos**: Algunas herramientas generan alertas que requieren validacion manual.
+| Limitación                           | Mitigación en v3.0                                    |
+| ------------------------------------ | ----------------------------------------------------- |
+| Dependencia de herramientas externas | Docker Compose con imágenes preconfiguradas           |
+| Tiempo de escaneo (15-30 min)        | Perfiles Quick/Passive para necesidades urgentes      |
+| Falsos positivos                     | Scoring Engine con EPSS para priorizar riesgos reales |
+| Fragilidad ante fallos               | Circuit Breaker permite completar escaneos parciales  |
 
 ## Trabajo Futuro
 
-1. Integracion de mas herramientas (Burp Suite, SQLMap).
-2. Implementacion de escaneos programados.
-3. Panel de administracion multi-usuario.
-4. Integracion con sistemas de ticketing.
-5. API publica documentada con Swagger.
+1. **Integración de Burp Suite Enterprise** para escaneos más profundos.
+2. **Escaneos programados** con cron integrado en el orquestador.
+3. **Panel multi-usuario** con autenticación JWT y roles (admin, auditor, viewer).
+4. **Integración con Jira/GitHub Issues** para creación automática de tickets.
+5. **API pública documentada** con Swagger/OpenAPI.
+6. **Dashboard de métricas históricas** con gráficos de tendencias de seguridad.
+7. **Soporte para escaneos de infraestructura cloud** (AWS, Azure, GCP APIs).
 
 ---
 
-# Referencias Bibliograficas
+# Referencias Bibliográficas
 
-1. OWASP Foundation. (2024). OWASP Top 10 Web Application Security Risks. https://owasp.org/Top10/
+1. OWASP Foundation. (2024). OWASP Top 10 Web Application Security Risks 2021. https://owasp.org/Top10/
 
-2. NIST. (2024). Common Vulnerability Scoring System v3.1. https://nvd.nist.gov/vuln-metrics/cvss
+2. NIST. (2024). Common Vulnerability Scoring System v3.1 Specification. https://www.first.org/cvss/v3.1/specification-document
 
-3. Offensive Security. (2024). Exploit Database. https://www.exploit-db.com/
+3. FIRST. (2024). EPSS - Exploit Prediction Scoring System. https://www.first.org/epss/
 
-4. Gordon Lyon. (2024). Nmap Reference Guide. https://nmap.org/book/man.html
+4. Nmap Project. (2024). Nmap Reference Guide. https://nmap.org/book/man.html
 
 5. OWASP Foundation. (2024). ZAP User Guide. https://www.zaproxy.org/docs/
 
-6. Kali Linux. (2024). Kali Tools. https://www.kali.org/tools/
+6. Offensive Security. (2024). Exploit Database. https://www.exploit-db.com/
+
+7. Kali Linux. (2024). Kali Tools Documentation. https://www.kali.org/tools/
+
+8. Martin Fowler. (2014). Circuit Breaker Pattern. https://martinfowler.com/bliki/CircuitBreaker.html
+
+9. Docker Inc. (2024). Docker Compose Specification. https://compose-spec.io/
+
+10. VNEXT Software. (2024). WhatWeb - Web Scanner. https://github.com/urbanadventurer/WhatWeb
 
 ---
 
 # Anexos
 
-## Anexo A: Manual de Usuario
+## Anexo A: Manual de Instalación
+
 Ver documento: `GUIA_INSTALACION.md`
 
-## Anexo B: Referencia de API
+## Anexo B: Referencia de API REST
+
 Ver documento: `API_REFERENCE.md`
 
-## Anexo C: Consideraciones Eticas
+## Anexo C: Consideraciones Éticas y Legales
+
 Ver documento: `ETICA_Y_LEGALIDAD.md`
 
-## Anexo D: Estructura del Proyecto
+## Anexo D: Estructura del Proyecto (Refactorizada)
+
 Ver documento: `ESTRUCTURA_PROYECTO.md`
 
-## Anexo E: Documentacion Tecnica Completa
+## Anexo E: Documentación Técnica Completa v3.0
+
 Ver documento: `DOCUMENTACION_TECNICA_COMPLETA.md`
 
 ---
 
-**Firma de Aprobacion**
+# Glosario de Términos Técnicos
 
-| Rol | Nombre | Firma | Fecha |
-|-----|--------|-------|-------|
-| Aprendiz Lider | | | |
-| Aprendiz 2 | | | |
-| Aprendiz 3 | | | |
-| Instructor | | | |
+| Término              | Definición                                                                        |
+| -------------------- | --------------------------------------------------------------------------------- |
+| **Circuit Breaker**  | Patrón de diseño que previene cascada de fallos                                   |
+| **CVSS**             | Common Vulnerability Scoring System - Sistema de puntuación de vulnerabilidades   |
+| **DAST**             | Dynamic Application Security Testing - Pruebas de seguridad dinámicas             |
+| **EPSS**             | Exploit Prediction Scoring System - Predicción de explotación                     |
+| **File Stabilizer**  | Mecanismo que espera a que archivos estén completamente escritos                  |
+| **NSE**              | Nmap Scripting Engine - Motor de scripts de Nmap                                  |
+| **SARIF**            | Static Analysis Results Interchange Format - Formato de intercambio de resultados |
+| **SPA**              | Single Page Application - Aplicación de página única (React, Angular, Vue)        |
+| **Target Validator** | Componente que verifica disponibilidad del objetivo antes de escanear             |
 
 ---
 
-*Documento generado como parte del proyecto de grado para el Servicio Nacional de Aprendizaje - SENA*
+**Firma de Aprobación**
+
+| Rol                         | Nombre | Firma | Fecha |
+| --------------------------- | ------ | ----- | ----- |
+| Aprendiz Líder / Backend    |        |       |       |
+| Aprendiz Frontend           |        |       |       |
+| Aprendiz Documentación / QA |        |       |       |
+| Instructor Evaluador        |        |       |       |
+
+---
+
+_Documento generado como parte del proyecto de grado para el Servicio Nacional de Aprendizaje - SENA_
+_tecnico en seguridad de aplicaciones web - 2026_

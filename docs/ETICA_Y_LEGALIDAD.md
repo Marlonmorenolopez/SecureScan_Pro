@@ -1,27 +1,27 @@
-# Consideraciones Eticas y Legales
+# Consideraciones Éticas y Legales - SecureScan Pro v3.0
 
-## ADVERTENCIA IMPORTANTE
+## ⚠️ ADVERTENCIA IMPORTANTE
 
 **Este proyecto es EXCLUSIVAMENTE para uso educativo y en entornos controlados.**
 
-El uso indebido de herramientas de escaneo de seguridad puede tener graves consecuencias legales y eticas. Este documento establece las pautas obligatorias para el uso responsable de SecureScan Pro.
+El uso indebido de herramientas de escaneo de seguridad puede tener graves consecuencias legales y éticas. SecureScan Pro v3.0 incluye **mecanismos de seguridad técnicos** (Target Validator, Circuit Breaker, whitelist hardcodeada) diseñados para prevenir uso no autorizado, pero la responsabilidad legal final recae en el usuario.
 
 ---
 
 ## 1. Marco Legal
 
-### 1.1 Legislacion Aplicable
+### 1.1 Legislación Aplicable
 
-El escaneo de sistemas sin autorizacion puede violar multiples leyes:
+El escaneo de sistemas sin autorización puede violar múltiples leyes:
 
 **Colombia (SENA):**
-- Ley 1273 de 2009 (Delitos informaticos)
-- Articulo 269A: Acceso abusivo a sistema informatico
-- Articulo 269B: Obstaculizacion ilegitima de sistema informatico
-- Articulo 269C: Interceptacion de datos informaticos
+- **Ley 1273 de 2009** (Delitos informáticos)
+  - Artículo 269A: Acceso abusivo a sistema informático
+  - Artículo 269B: Obstaculización ilegítima de sistema informático  
+  - Artículo 269C: Interceptación de datos informáticos
 
 **Penalidades:**
-- Prision de 48 a 96 meses
+- Prisión de 48 a 96 meses
 - Multas de 100 a 1000 SMLMV
 
 **Internacional:**
@@ -33,36 +33,37 @@ El escaneo de sistemas sin autorizacion puede violar multiples leyes:
 
 Antes de realizar CUALQUIER escaneo, debe:
 
-1. **Obtener autorizacion por escrito** del propietario del sistema
-2. **Definir el alcance** exacto de las pruebas
-3. **Establecer fechas y horarios** autorizados
-4. **Acordar metodos de comunicacion** de hallazgos
-5. **Firmar acuerdos de confidencialidad** (NDA)
+1. ✅ **Obtener autorización por escrito** del propietario del sistema
+2. ✅ **Definir el alcance** exacto de las pruebas (IPs, URLs, puertos)
+3. ✅ **Establecer fechas y horarios** autorizados
+4. ✅ **Acordar métodos de comunicación** de hallazgos
+5. ✅ **Firmar acuerdos de confidencialidad** (NDA)
+6. ✅ **Verificar que el target está en la whitelist** del sistema
 
 ---
 
-## 2. Autorizacion Obligatoria
+## 2. Autorización Obligatoria
 
-### 2.1 Plantilla de Autorizacion
+### 2.1 Plantilla de Autorización
 
-```
-AUTORIZACION PARA PRUEBAS DE SEGURIDAD
+```text
+AUTORIZACIÓN PARA PRUEBAS DE SEGURIDAD
 
 Fecha: _______________
 
 DATOS DEL PROPIETARIO:
-Empresa/Organizacion: _______________________
+Empresa/Organización: _______________________
 Representante Legal: ________________________
 Cargo: ____________________________________
 Documento de Identidad: _____________________
-Correo Electronico: _________________________
-Telefono: _________________________________
+Correo Electrónico: _________________________
+Teléfono: _________________________________
 
 DATOS DEL EVALUADOR:
 Nombre Completo: __________________________
 Documento de Identidad: _____________________
-Organizacion/Institucion: _____________________
-Correo Electronico: _________________________
+Organización/Institución: _____________________
+Correo Electrónico: _________________________
 
 ALCANCE DE LAS PRUEBAS:
 
@@ -76,318 +77,336 @@ Direcciones IP/URLs autorizadas:
 [ ] ______________________________________
 
 Tipos de pruebas autorizadas:
-[ ] Escaneo de puertos
-[ ] Deteccion de vulnerabilidades
-[ ] Enumeracion de directorios
-[ ] Pruebas de aplicaciones web
-[ ] Busqueda de exploits
+[ ] Escaneo de puertos (Nmap)
+[ ] Detección de tecnologías (WhatWeb)
+[ ] Enumeración de directorios (Gobuster)
+[ ] Pruebas de aplicaciones web (OWASP ZAP)
+[ ] Búsqueda de exploits (ExploitDB)
+[ ] Verificación de exploits (Metasploit dry-run)
 [ ] Otros: ________________________________
 
 Pruebas NO autorizadas:
-[ ] Explotacion activa de vulnerabilidades
-[ ] Denegacion de servicio (DoS)
-[ ] Ingenieria social
+[ ] Explotación activa de vulnerabilidades (sin dry-run)
+[ ] Denegación de servicio (DoS)
+[ ] Ingeniería social
+[ ] Fuerza bruta de credenciales
 [ ] Otros: ________________________________
 
-PERIODO DE AUTORIZACION:
+PERIODO DE AUTORIZACIÓN:
 Fecha inicio: _______________
 Fecha fin: _________________
 Horario permitido: ___________
 
 CONDICIONES:
-1. Las pruebas se realizaran unicamente sobre los sistemas listados.
-2. No se explotaran vulnerabilidades sin autorizacion adicional.
-3. Todos los hallazgos seran reportados al propietario.
-4. La informacion obtenida sera tratada confidencialmente.
-5. Se proporcionara un informe final de los resultados.
+1. Las pruebas se realizarán únicamente sobre los sistemas listados.
+2. No se explotarán vulnerabilidades sin autorización adicional explícita.
+3. Todos los hallazgos serán reportados al propietario.
+4. La información obtenida será tratada confidencialmente.
+5. Se proporcionará un informe final de los resultados.
+6. Se respetarán los límites técnicos del sistema (whitelist).
 
 FIRMAS:
 
 _______________________          _______________________
 Propietario del Sistema           Evaluador de Seguridad
 Fecha: _______________          Fecha: _______________
-```
-
-### 2.2 Que Sistemas NUNCA Escanear
-
-**Absolutamente prohibido:**
-- Sistemas de produccion sin autorizacion
-- Infraestructura gubernamental
-- Sistemas bancarios o financieros
-- Redes hospitalarias
-- Infraestructura critica
-- Sistemas de terceros
-- Redes publicas (WiFi publico, universidades, etc.)
-
----
-
-## 3. Uso del Laboratorio Local
-
-### 3.1 Entorno Seguro
-
-Este proyecto incluye un laboratorio con aplicaciones vulnerables que se ejecutan **localmente** en Docker:
-
-| Aplicacion | Puerto | Proposito |
-|------------|--------|-----------|
-| Juice Shop | 3001 | Practica de vulnerabilidades modernas |
-| DVWA | 3002 | Vulnerabilidades web clasicas |
-| WebGoat | 3003 | Tutoriales OWASP |
-| bWAPP | 3004 | 100+ vulnerabilidades |
-| Hackazon | 3005 | E-commerce vulnerable |
-
-### 3.2 Por Que Usar el Laboratorio
-
-**Ventajas:**
-- 100% legal (son tus propios sistemas)
-- Sin riesgo de dano a terceros
-- Entorno controlado y reproducible
-- Puedes romper cosas sin consecuencias
-- Aprendizaje practico seguro
-
-### 3.3 Restricciones del Sistema
-
-SecureScan Pro incluye restricciones de seguridad:
-
-```javascript
-// El sistema solo permite escanear:
+2.2 Sistemas NUNCA Escanear
+Absolutamente prohibido (el sistema técnicamente lo bloqueará):
+❌ Sistemas de producción sin autorización
+❌ Infraestructura gubernamental
+❌ Sistemas bancarios o financieros
+❌ Redes hospitalarias
+❌ Infraestructura crítica
+❌ Sistemas de terceros sin autorización escrita
+❌ Redes públicas (WiFi público, universidades, etc.)
+❌ Cualquier objetivo fuera de la whitelist del sistema
+3. Laboratorio Local Seguro (Docker Compose)
+3.1 Entorno Controlado v3.0
+Este proyecto incluye un laboratorio con 4 aplicaciones vulnerables que se ejecutan localmente en Docker:
+Table
+Aplicación	Puerto	Stack	Propósito	Dificultad
+Juice Shop	3001	Node.js/Express/Angular	OWASP Top 10 2021, API REST/GraphQL	⭐⭐⭐ Principiante-Avanzado
+DVWA	3002	PHP/Apache/MariaDB	Vulnerabilidades web clásicas, niveles ajustables	⭐ Principiante
+WebGoat	3003	Java/Spring Boot	Tutoriales interactivos OWASP	⭐⭐ Principiante-Intermedio
+WebWolf	9090	Java/Spring Boot	Companion de WebGoat (phishing/email interception)	⭐⭐ Intermedio
+Red interna: 172.20.0.0/24 (aislada del host)
+3.2 Ventajas del Laboratorio
+✅ 100% legal (son tus propios sistemas locales)
+✅ Sin riesgo de daño a terceros
+✅ Entorno controlado y reproducible
+✅ Puedes romper cosas sin consecuencias
+✅ Aprendizaje práctico seguro
+✅ Metasploit en modo dry-run por defecto
+3.3 Configuraciones de Seguridad Reducida
+Las aplicaciones del laboratorio están configuradas intencionalmente con seguridad mínima:
+Juice Shop: NODE_ENV=unsafe (deshabilita protecciones)
+DVWA: SECURITY_LEVEL=low, PHPIDS_ENABLED=false
+WebGoat: WEBGOAT_SECURITY_XFRAMEOPTIONS=false
+Todas: Sin CAPTCHA, sin firewalls, sin rate-limiting
+4. Mecanismos de Seguridad Técnicos v3.0
+SecureScan Pro v3.0 incluye múltiples capas de protección técnica para prevenir uso no autorizado:
+4.1 Target Validator (Validación de Objetivos)
+Implementación técnica: Clase interna del orquestador
+JavaScript
+Copy
+// Whitelist hardcodeada - NO MODIFICABLE sin cambiar código fuente
 const ALLOWED_TARGETS = [
-  'localhost',
-  '127.0.0.1',
-  '192.168.*.*',  // Redes privadas
-  '10.*.*.*',     // Redes privadas
-  '172.16.*.*',   // Redes privadas
+  'localhost:3001',      // Juice Shop
+  'localhost:3002',      // DVWA
+  'localhost:3003',      // WebGoat
+  '127.0.0.1:3001',
+  '127.0.0.1:3002',
+  '127.0.0.1:3003',
+  '172.20.0.0/24'        // Red Docker interna
 ];
-
-// Objetivos externos requieren confirmacion explicita
-```
-
----
-
-## 4. Principios Eticos del Hacking
-
-### 4.1 Codigo de Etica
-
-Como profesional de seguridad, debes:
-
-1. **Actuar con integridad**
-   - Nunca usar conocimientos para dano
-   - Reportar vulnerabilidades responsablemente
-   - Proteger la privacidad de otros
-
-2. **Obtener autorizacion siempre**
-   - Sin autorizacion = ilegal
-   - Documentar todo por escrito
-   - Respetar los limites acordados
-
-3. **Minimizar el impacto**
-   - No causar danos innecesarios
-   - Evitar interrupciones de servicio
-   - Proteger datos sensibles encontrados
-
-4. **Reportar responsablemente**
-   - Notificar al propietario primero
-   - Dar tiempo para remediar
-   - No divulgar publicamente sin permiso
-
-### 4.2 Divulgacion Responsable
-
-Si encuentras vulnerabilidades en sistemas reales:
-
-1. **Notifica al propietario** de forma privada
-2. **Proporciona detalles tecnicos** suficientes
-3. **Sugiere remediaciones** si es posible
-4. **Da tiempo razonable** (90 dias es estandar)
-5. **No explotes** la vulnerabilidad
-6. **No vendas** la informacion
-
----
-
-## 5. Mejores Practicas
-
-### 5.1 Antes del Escaneo
-
-- [ ] Verificar autorizacion escrita
-- [ ] Confirmar alcance permitido
-- [ ] Documentar fecha y hora de inicio
-- [ ] Verificar que el objetivo es correcto
-- [ ] Tener contacto de emergencia del cliente
-
-### 5.2 Durante el Escaneo
-
-- [ ] Registrar todas las actividades
-- [ ] Monitorear impacto en el sistema
-- [ ] Detener si hay problemas inesperados
-- [ ] No exceder el alcance autorizado
-- [ ] Proteger cualquier dato sensible encontrado
-
-### 5.3 Despues del Escaneo
-
-- [ ] Documentar todos los hallazgos
-- [ ] Clasificar por severidad
-- [ ] Preparar reporte profesional
-- [ ] Entregar al cliente de forma segura
-- [ ] Eliminar datos sensibles de tus sistemas
-- [ ] Mantener confidencialidad
-
----
-
-## 6. Limitaciones del Sistema
-
-### 6.1 Whitelist de Objetivos
-
-Por defecto, SecureScan Pro solo permite escanear:
-
-```javascript
-// Configuracion en backend/server.js
-const WHITELIST = {
-  // Siempre permitidos (laboratorio local)
-  localhost: true,
-  '127.0.0.1': true,
-  
-  // Rangos de red privada
-  privateRanges: [
-    '192.168.0.0/16',
-    '10.0.0.0/8',
-    '172.16.0.0/12'
-  ],
-  
-  // Dominios personalizados (agregar con autorizacion)
-  customDomains: []
-};
-```
-
-### 6.2 Rate Limiting
-
-El sistema incluye limites para prevenir abuso:
-
-```javascript
-// Limites de escaneo
+Validaciones realizadas:
+Scope Check: El target debe estar en la whitelist
+Health Check: Conexión TCP exitosa antes de escanear
+DNS Resolution: Verificación de que el hostname resuelve a IP permitida
+Si el target no está permitido:
+JSON
+Copy
+{
+  "error": "Target \"http://ejemplo.com\" fuera de alcance permitido",
+  "allowedTargets": ["localhost:3001", "localhost:3002", "localhost:3003"],
+  "code": "TARGET_NOT_ALLOWED"
+}
+4.2 Circuit Breaker (Aislamiento de Fallos)
+Propósito: Prevenir que errores en una herramienta afecten todo el sistema.
+Estados:
+CLOSED: Funcionamiento normal
+OPEN: Servicio temporalmente deshabilitado tras 2-3 fallos
+HALF_OPEN: Período de prueba antes de reactivar
+Herramientas protegidas:
+Table
+Herramienta	Fallos para abrir	Tiempo de recuperación
+Nmap	2	120 segundos
+ZAP	2	300 segundos
+Gobuster	3	60 segundos
+WhatWeb	3	60 segundos
+4.3 Process Manager (Gestión de Procesos)
+Características:
+Registro de todos los PIDs de procesos hijos
+Cleanup automático en señales SIGTERM/SIGINT
+Timeout forzado tras 30-60 minutos de escaneo
+Prevención de procesos zombis
+4.4 Metasploit - Modo Dry-Run por Defecto
+Configuración de seguridad:
+JavaScript
+Copy
+metasploit: {
+  enabled: false,        // Deshabilitado por defecto
+  dryRun: true,          // Solo verificación, nunca explota realmente
+  requireConfirmation: true,  // Requiere confirmación manual adicional
+  maxSessions: 3,        // Límite de sesiones
+  minRanking: 'good'     // Solo exploits con ranking "good" o superior
+}
+En modo dry-run, Metasploit:
+✅ Verifica la existencia de exploits en la base de datos
+✅ Comprueba compatibilidad con versiones detectadas
+✅ Simula el proceso de explotación sin ejecutar payload real
+❌ NO establece sesiones reales
+❌ NO ejecuta código en el target
+❌ NO modifica el sistema objetivo
+4.5 Rate Limiting y Cuotas
+JavaScript
+Copy
+// Límites del sistema
 const RATE_LIMITS = {
   maxScansPerHour: 10,
   maxConcurrentScans: 2,
-  cooldownBetweenScans: 60, // segundos
-  maxTargetsPerScan: 1
+  cooldownBetweenScans: 60,  // segundos
+  maxTargetsPerScan: 1,
+  maxScanDuration: 3600       // 1 hora máximo
 };
-```
-
-### 6.3 Logging de Actividades
-
-Todas las actividades se registran:
-
-```javascript
-// Ejemplo de log
+4.6 Logging de Auditoría
+Todas las actividades se registran inmutablemente:
+JavaScript
+Copy
+// Estructura del log
 {
-  timestamp: "2024-03-14T15:00:00.000Z",
+  timestamp: "2026-03-19T22:45:00.000Z",
   action: "SCAN_STARTED",
   target: "http://localhost:3001",
   user: "local",
   ipAddress: "127.0.0.1",
-  tools: ["nmap", "nikto", "gobuster"]
+  tools: ["whatweb", "nmap", "gobuster", "zap", "exploitdb"],
+  profile: "standard",
+  circuitBreakerStates: {
+    nmap: "CLOSED",
+    zap: "CLOSED"
+  },
+  targetValidation: {
+    passed: true,
+    healthCheck: "SUCCESS",
+    scopeCheck: "ALLOWED"
+  }
 }
-```
-
----
-
-## 7. Responsabilidad
-
-### 7.1 Descargo de Responsabilidad
-
-```
-DESCARGO DE RESPONSABILIDAD
+Ubicación: backend/logs/audit-YYYY-MM-DD.log
+5. Principios Éticos del Hacking
+5.1 Código de Ética
+Como profesional de seguridad, debes:
+Actuar con integridad
+Nunca usar conocimientos para daño
+Reportar vulnerabilidades responsablemente
+Proteger la privacidad de otros
+Obtener autorización siempre
+Sin autorización = ilegal
+Documentar todo por escrito
+Respetar los límites técnicos (whitelist) y acordados
+Minimizar el impacto
+No causar daños innecesarios
+Evitar interrupciones de servicio
+Proteger datos sensibles encontrados
+Usar perfiles de escaneo apropiados (quick vs comprehensive)
+Reportar responsablemente
+Notificar al propietario primero
+Dar tiempo para remediar (90 días es estándar)
+No divulgar públicamente sin permiso
+5.2 Divulgación Responsable (Responsible Disclosure)
+Si encuentras vulnerabilidades en sistemas reales:
+🔒 Notifica al propietario de forma privada y segura
+📋 Proporciona detalles técnicos suficientes (CWE, CVSS, PoC)
+💡 Sugiere remediaciones específicas si es posible
+⏱️ Da tiempo razonable (90 días estándar de la industria)
+🚫 No explotes la vulnerabilidad
+💰 No vendas la información a terceros
+6. Mejores Prácticas de Uso
+6.1 Antes del Escaneo
+[ ] Verificar que el target está en la whitelist del sistema
+[ ] Confirmar autorización escrita del propietario (si no es laboratorio)
+[ ] Seleccionar el perfil de escaneo apropiado (quick, standard, comprehensive, passive)
+[ ] Verificar que el laboratorio está saludable (docker-compose ps)
+[ ] Documentar fecha y hora de inicio
+[ ] Tener contacto de emergencia (si aplica)
+6.2 Durante el Escaneo
+[ ] Monitorear el progreso vía /api/scan/:id/status
+[ ] Verificar estados de los Circuit Breakers
+[ ] No interrumpir el proceso (a menos que sea emergencia)
+[ ] Revisar logs en tiempo real si es necesario
+6.3 Después del Escaneo
+[ ] Revisar el score de seguridad calculado
+[ ] Analizar hallazgos críticos y altos primero
+[ ] Descargar reportes en múltiples formatos (HTML, PDF, SARIF)
+[ ] Eliminar datos sensibles de archivos temporales (backend/temp/)
+[ ] Mantener confidencialidad de los resultados
+7. Perfiles de Escaneo y su Impacto
+SecureScan Pro v3.0 ofrece 4 perfiles con diferentes niveles de invasividad:
+Table
+Perfil	Duración	Invasividad	Uso Recomendado
+Quick	5-10 min	Mínima	Validación rápida, CI/CD
+Standard	20-30 min	Moderada	Auditoría regular (default)
+Comprehensive	45-90 min	Alta	Evaluación profunda
+Passive	10-15 min	Mínima	Entornos sensibles
+Herramientas por perfil:
+Quick: WhatWeb → Nmap (top 1000) → ZAP (spider only) → Scoring
+Standard: WhatWeb → Nmap (all ports) → Gobuster → ZAP (full) → ExploitDB → Scoring
+Comprehensive: + Metasploit (dry-run) + DNS/VHost enumeration
+Passive: Sin active scanning de ZAP, solo scripts seguros de Nmap
+8. Responsabilidad y Descargo
+8.1 Descargo de Responsabilidad
+Text
+Copy
+DESCARGO DE RESPONSABILIDAD - SECURESCAN PRO v3.0
 
 El software SecureScan Pro se proporciona "tal cual", sin 
-garantias de ningun tipo. Los autores y colaboradores no 
-seran responsables de:
+garantías de ningún tipo. Los autores, colaboradores y el 
+SENA no serán responsables de:
 
-- Uso indebido del software
-- Danos causados a sistemas de terceros
+- Uso indebido del software contra sistemas no autorizados
+- Daños causados a sistemas de terceros por incumplimiento 
+  de las restricciones técnicas (whitelist, dry-run)
 - Consecuencias legales por uso no autorizado
-- Perdida de datos o interrupciones de servicio
+- Pérdida de datos o interrupciones de servicio en entornos 
+  de producción
+- Fallos en los mecanismos de seguridad técnica por 
+  modificaciones no autorizadas del código
 
 El usuario asume toda la responsabilidad por:
 
-- Obtener autorizacion adecuada antes de escanear
-- Cumplir con las leyes aplicables
-- Usar el software de manera etica
-- Proteger la informacion obtenida
+- Obtener autorización adecuada antes de escanear (incluso 
+  si modifica la whitelist)
+- Cumplir con las leyes aplicables de Colombia y 
+  jurisdicciones internacionales
+- Usar el software de manera ética y responsable
+- Proteger la información sensible obtenida durante pruebas
+- No intentar deshabilitar mecanismos de seguridad técnica
 
-Al usar este software, acepta estos terminos y se 
-compromete a usarlo exclusivamente de manera legal y etica.
-```
-
-### 7.2 Uso Academico (SENA)
-
-Para proyectos academicos:
-
-1. **Usar exclusivamente el laboratorio local**
-2. **Documentar el proposito educativo**
-3. **Incluir esta seccion de etica en el proyecto**
-4. **No escanear sistemas de la institucion** sin autorizacion
-5. **Demostrar comprension de implicaciones legales**
-
----
-
-## 8. Recursos Adicionales
-
-### 8.1 Certificaciones Eticas
-
-- CEH (Certified Ethical Hacker)
-- OSCP (Offensive Security Certified Professional)
-- GPEN (GIAC Penetration Tester)
-- CompTIA PenTest+
-
-### 8.2 Organizaciones
-
-- OWASP (Open Web Application Security Project)
-- SANS Institute
-- EC-Council
-- Offensive Security
-
-### 8.3 Programas de Bug Bounty (Legales)
-
-Plataformas donde puedes practicar legalmente:
-- HackerOne (hackerone.com)
-- Bugcrowd (bugcrowd.com)
-- Synack (synack.com)
-- Open Bug Bounty (openbugbounty.org)
-
-### 8.4 Laboratorios de Practica (Legales)
-
-- HackTheBox (hackthebox.eu)
-- TryHackMe (tryhackme.com)
-- VulnHub (vulnhub.com)
-- OWASP WebGoat
-- PortSwigger Web Security Academy
-
----
-
-## 9. Checklist Final
-
-Antes de usar SecureScan Pro, confirma:
-
-- [ ] Entiendo las implicaciones legales
-- [ ] Solo escaneara sistemas con autorizacion
-- [ ] Usara el laboratorio local para practicar
-- [ ] Reportara hallazgos de manera responsable
-- [ ] Protegera la informacion sensible
-- [ ] Actuara de manera etica en todo momento
-
-**Firma de compromiso:**
-
-Yo, _________________________, me comprometo a usar 
-SecureScan Pro de manera legal, etica y responsable, 
-siguiendo todas las pautas establecidas en este documento.
-
+Al usar este software, acepta estos términos y se 
+compromete a usarlo exclusivamente de manera legal y ética, 
+entendiendo que los mecanismos técnicos de seguridad son 
+una ayuda, no una garantía absoluta.
+8.2 Uso Académico (SENA)
+Para proyectos académicos del SENA:
+📚 Usar exclusivamente el laboratorio local (puertos 3001, 3002, 3003, 9090)
+📝 Documentar el propósito educativo en el informe del proyecto
+📖 Incluir esta sección de ética en la documentación técnica
+🚫 NO escanear sistemas de la institución sin autorización formal del coordinador
+✅ Demostrar comprensión de implicaciones legales en la defensa del proyecto
+9. Recursos de Aprendizaje Legal
+9.1 Plataformas de Práctica Legal
+Table
+Plataforma	Tipo	Costo	Notas
+HackTheBox	Labs online	Freemium	Máquinas vulnerables legales
+TryHackMe	Tutoriales	Freemium	Paths guiados para principiantes
+VulnHub	VMs descargables	Gratis	Laboratorio local completo
+OWASP WebGoat	Tutorial	Gratis	Incluido en este proyecto
+PortSwigger Academy	Web security	Gratis	De los creadores de Burp Suite
+9.2 Certificaciones Éticas Reconocidas
+CEH (Certified Ethical Hacker) - EC-Council
+OSCP (Offensive Security Certified Professional) - Offensive Security
+GPEN (GIAC Penetration Tester) - SANS Institute
+CompTIA PenTest+ - CompTIA
+eJPT (eLearnSecurity Junior Penetration Tester) - INE
+9.3 Programas de Bug Bounty (Práctica Legal)
+Plataformas donde puedes practicar legalmente con autorización implícita:
+HackerOne (hackerone.com)
+Bugcrowd (bugcrowd.com)
+Synack (synack.com) - Requiere invitación
+Open Bug Bounty (openbugbounty.org)
+10. Checklist Final de Ética y Legalidad
+Antes de usar SecureScan Pro v3.0, confirma:
+✅ Para Uso en Laboratorio (Recomendado)
+[ ] Entiendo que solo puedo escanear: localhost:3001-3003, 127.0.0.1:3001-3003
+[ ] He verificado que el laboratorio está corriendo (docker-compose ps)
+[ ] Comprendo que Metasploit está en modo dry-run por defecto
+[ ] Acepto que los logs de auditoría registran todas mis actividades
+✅ Para Uso en Sistemas Autorizados (Requiere Autorización Escrita)
+[ ] Tengo autorización por escrita del propietario
+[ ] El target está explícitamente listado en la autorización
+[ ] He verificado que el target está en la whitelist del sistema
+[ ] Entiendo las implicaciones legales de mi país y el objetivo
+[ ] Me comprometo a reportar hallazgos de manera responsable
+[ ] Protegeré la información sensible encontrada
+[ ] Actuaré de manera ética en todo momento
+🚫 Compromisos que Acepto
+[ ] NO intentaré modificar la whitelist hardcodeada
+[ ] NO usaré Metasploit fuera de modo dry-run sin autorización explícita
+[ ] NO escanearé sistemas de producción sin autorización
+[ ] NO compartiré hallazgos con terceros sin permiso
+[ ] NO usaré este conocimiento para dañar a otros
+Firma de Compromiso Ético:
+Yo, _________________________, estudiante del programa de
+Tecnología en Análisis y Desarrollo de Sistemas de Información
+del SENA, me comprometo a usar SecureScan Pro v3.0 de manera
+legal, ética y responsable, siguiendo todas las pautas establecidas
+en este documento.
+Entiendo que el sistema incluye mecanismos técnicos de protección
+(Target Validator, Circuit Breaker, whitelist) diseñados para prevenir
+uso no autorizado, pero que la responsabilidad legal final es mía.
 Fecha: _______________
 Firma: _______________
-
----
-
-## 10. Contacto
-
-Para dudas sobre uso etico:
-- Instructor del SENA
-- Coordinador del programa
-- Departamento legal de la institucion
-
-**Recuerda: La seguridad informatica es una responsabilidad, no un juego.**
+Documento: _______________
+11. Contacto y Reporte de Incidentes
+Para reportar problemas de seguridad en el propio SecureScan Pro:
+📧 Instructor del SENA
+📧 Coordinador del programa
+🐛 GitHub Issues (si es proyecto open source)
+Para emergencias legales: Consultar con el departamento jurídico de la institución o abogado especializado en derecho informático.
+Recuerda: La seguridad informática es una responsabilidad, no un juego.
+"With great power comes great responsibility" - Principio del Hacking Ético
+Documento: ETICA_Y_LEGALIDAD.md
+Versión: 3.0.0 (Resiliente)
+Fecha: Marzo 2026
+Proyecto: SecureScan Pro - SENA
+tecnico en seguridad de aplicaciones web
