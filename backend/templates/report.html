@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte de Seguridad - {{target}}</title>
+    <style>
+        :root {
+            --primary: #22c55e;
+            --primary-dark: #16a34a;
+            --background: #0f172a;
+            --card: #1e293b;
+            --card-hover: #334155;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --critical: #ef4444;
+            --high: #f97316;
+            --medium: #eab308;
+            --low: #3b82f6;
+            --info: #6b7280;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 3rem 0;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 3rem;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo-icon svg {
+            width: 36px;
+            height: 36px;
+            fill: var(--background);
+        }
+        
+        .logo-text {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+        
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+        
+        /* Info Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: var(--card);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+        
+        .info-item {
+            text-align: center;
+        }
+        
+        .info-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+        }
+        
+        .info-value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+        
+        /* Score Section */
+        .score-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem;
+            background: var(--card);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            margin-bottom: 3rem;
+        }
+        
+        .score-circle {
+            position: relative;
+            width: 180px;
+            height: 180px;
+        }
+        
+        .score-circle svg {
+            transform: rotate(-90deg);
+        }
+        
+        .score-circle circle {
+            fill: none;
+            stroke-width: 12;
+        }
+        
+        .score-bg {
+            stroke: var(--border);
+        }
+        
+        .score-progress {
+            stroke: var(--primary);
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.5s ease;
+        }
+        
+        .score-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        
+        .score-grade {
+            font-size: 3rem;
+            font-weight: 700;
+        }
+        
+        .score-grade.grade-a { color: var(--primary); }
+        .score-grade.grade-b { color: #22d3ee; }
+        .score-grade.grade-c { color: var(--medium); }
+        .score-grade.grade-d { color: var(--high); }
+        .score-grade.grade-f { color: var(--critical); }
+        
+        .score-value {
+            font-size: 1rem;
+            color: var(--text-muted);
+        }
+        
+        .score-breakdown {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+        
+        .breakdown-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .breakdown-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .breakdown-dot.critical { background: var(--critical); }
+        .breakdown-dot.high { background: var(--high); }
+        .breakdown-dot.medium { background: var(--medium); }
+        .breakdown-dot.low { background: var(--low); }
+        .breakdown-dot.info { background: var(--info); }
+        
+        .breakdown-label {
+            color: var(--text);
+            font-size: 0.875rem;
+        }
+        
+        .breakdown-count {
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+        
+        /* Section */
+        .section {
+            margin-bottom: 3rem;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .section-title svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--primary);
+        }
+        
+        /* Cards */
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: background 0.2s;
+        }
+        
+        .card:hover {
+            background: var(--card-hover);
+        }
+        
+        /* Vulnerability Card */
+        .vuln-card {
+            border-left: 4px solid var(--info);
+        }
+        
+        .vuln-card.critical { border-left-color: var(--critical); }
+        .vuln-card.high { border-left-color: var(--high); }
+        .vuln-card.medium { border-left-color: var(--medium); }
+        .vuln-card.low { border-left-color: var(--low); }
+        
+        .vuln-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .vuln-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+        
+        .vuln-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .vuln-badge.critical { background: var(--critical); color: white; }
+        .vuln-badge.high { background: var(--high); color: white; }
+        .vuln-badge.medium { background: var(--medium); color: black; }
+        .vuln-badge.low { background: var(--low); color: white; }
+        .vuln-badge.info { background: var(--info); color: white; }
+        
+        .vuln-meta {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+        }
+        
+        .vuln-description {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        
+        .vuln-solution {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+        
+        .vuln-solution-title {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .vuln-solution-text {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+        
+        /* Table */
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th {
+            background: var(--card);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            color: var(--text);
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        tr:hover td {
+            background: var(--card-hover);
+        }
+        
+        .mono {
+            font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+            font-size: 0.875rem;
+        }
+        
+        /* Tags */
+        .tag {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            background: var(--card-hover);
+            border-radius: 4px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin: 0.125rem;
+        }
+        
+        /* Grid */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        /* Tech Card */
+        .tech-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .tech-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(34, 197, 94, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+        
+        .tech-info h4 {
+            font-weight: 600;
+            color: var(--text);
+        }
+        
+        .tech-info p {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+        
+        /* Port Status */
+        .port-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .port-status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--primary);
+        }
+        
+        /* Exploit Card */
+        .exploit-card {
+            border-left: 4px solid var(--critical);
+        }
+        
+        .exploit-id {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            background: var(--critical);
+            color: white;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+        
+        .footer-warning {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-warning h4 {
+            color: var(--critical);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Executive Summary */
+        .exec-summary {
+            background: linear-gradient(135deg, var(--card) 0%, rgba(34, 197, 94, 0.1) 100%);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .exec-summary h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .exec-summary p {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        
+        .exec-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .exec-stat {
+            text-align: center;
+            padding: 1rem;
+            background: var(--card);
+            border-radius: 8px;
+        }
+        
+        .exec-stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+        
+        .exec-stat-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+        
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+            
+            .card, .score-section, .exec-summary {
+                background: #f8f9fa;
+                border-color: #dee2e6;
+            }
+            
+            .section-title {
+                border-bottom-color: #22c55e;
+            }
+        }
+        
+        @page {
+            margin: 2cm;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+                </div>
+                <span class="logo-text">SecureScan Pro</span>
+            </div>
+            <h1>Reporte de Analisis de Seguridad</h1>
+            <p class="subtitle">Evaluacion Automatizada de Vulnerabilidades</p>
+        </header>
+        
+        <!-- Info Grid -->
+        <div class="info-grid">
+            <div class="info-item">
+                <div class="info-label">Objetivo</div>
+                <div class="info-value mono">{{target}}</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Fecha del Escaneo</div>
+                <div class="info-value">{{scanDate}}</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Duracion</div>
+                <div class="info-value">{{duration}}</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">ID del Escaneo</div>
+                <div class="info-value mono">{{scanId}}</div>
+            </div>
+        </div>
+        
+        <!-- Score Section -->
+        <div class="score-section">
+            <div class="score-circle">
+                <svg width="180" height="180">
+                    <circle class="score-bg" cx="90" cy="90" r="78"></circle>
+                    <circle class="score-progress" cx="90" cy="90" r="78" 
+                            stroke-dasharray="490" 
+                            stroke-dashoffset="{{scoreOffset}}"></circle>
+                </svg>
+                <div class="score-text">
+                    <div class="score-grade grade-{{gradeLower}}">{{grade}}</div>
+                    <div class="score-value">{{score}}/100</div>
+                </div>
+            </div>
+            <div class="score-breakdown">
+                <div class="breakdown-item">
+                    <div class="breakdown-dot critical"></div>
+                    <div>
+                        <div class="breakdown-count">{{critical}}</div>
+                        <div class="breakdown-label">Criticos</div>
+                    </div>
+                </div>
+                <div class="breakdown-item">
+                    <div class="breakdown-dot high"></div>
+                    <div>
+                        <div class="breakdown-count">{{high}}</div>
+                        <div class="breakdown-label">Altos</div>
+                    </div>
+                </div>
+                <div class="breakdown-item">
+                    <div class="breakdown-dot medium"></div>
+                    <div>
+                        <div class="breakdown-count">{{medium}}</div>
+                        <div class="breakdown-label">Medios</div>
+                    </div>
+                </div>
+                <div class="breakdown-item">
+                    <div class="breakdown-dot low"></div>
+                    <div>
+                        <div class="breakdown-count">{{low}}</div>
+                        <div class="breakdown-label">Bajos</div>
+                    </div>
+                </div>
+                <div class="breakdown-item">
+                    <div class="breakdown-dot info"></div>
+                    <div>
+                        <div class="breakdown-count">{{info}}</div>
+                        <div class="breakdown-label">Info</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Executive Summary -->
+        <div class="exec-summary">
+            <h3>Resumen Ejecutivo</h3>
+            <p>
+                El analisis de seguridad del objetivo <strong>{{target}}</strong> revela un nivel de riesgo 
+                <strong>{{riskLevel}}</strong>. Se detectaron {{totalVulnerabilities}} vulnerabilidades, 
+                {{totalExploits}} exploits potenciales y {{totalPorts}} puertos abiertos. 
+                Se recomienda abordar los hallazgos criticos y de alta severidad de manera prioritaria.
+            </p>
+            <div class="exec-stats">
+                <div class="exec-stat">
+                    <div class="exec-stat-value">{{totalTechnologies}}</div>
+                    <div class="exec-stat-label">Tecnologias</div>
+                </div>
+                <div class="exec-stat">
+                    <div class="exec-stat-value">{{totalPorts}}</div>
+                    <div class="exec-stat-label">Puertos</div>
+                </div>
+                <div class="exec-stat">
+                    <div class="exec-stat-value">{{totalDirectories}}</div>
+                    <div class="exec-stat-label">Directorios</div>
+                </div>
+                <div class="exec-stat">
+                    <div class="exec-stat-value">{{totalVulnerabilities}}</div>
+                    <div class="exec-stat-label">Vulnerabilidades</div>
+                </div>
+                <div class="exec-stat">
+                    <div class="exec-stat-value">{{totalExploits}}</div>
+                    <div class="exec-stat-label">Exploits</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Vulnerabilities Section -->
+        <section class="section">
+            <h2 class="section-title">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                Vulnerabilidades Detectadas
+            </h2>
+            {{#vulnerabilities}}
+            <div class="card vuln-card {{severity}}">
+                <div class="vuln-header">
+                    <h3 class="vuln-title">{{name}}</h3>
+                    <span class="vuln-badge {{severity}}">{{severity}}</span>
+                </div>
+                <div class="vuln-meta">
+                    <span class="tag">{{tool}}</span>
+                    {{#cvss}}<span class="tag">CVSS: {{cvss}}</span>{{/cvss}}
+                    <span class="tag">{{id}}</span>
+                </div>
+                <p class="vuln-description">{{description}}</p>
+                {{#solution}}
+                <div class="vuln-solution">
+                    <div class="vuln-solution-title">Recomendacion</div>
+                    <p class="vuln-solution-text">{{solution}}</p>
+                </div>
+                {{/solution}}
+            </div>
+            {{/vulnerabilities}}
+            {{^vulnerabilities}}
+            <div class="card">
+                <p style="text-align: center; color: var(--text-muted);">No se detectaron vulnerabilidades</p>
+            </div>
+            {{/vulnerabilities}}
+        </section>
+        
+        <!-- Technologies Section -->
+        <section class="section">
+            <h2 class="section-title">
+                <svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+                Tecnologias Detectadas
+            </h2>
+            <div class="grid-3">
+                {{#technologies}}
+                <div class="card tech-card">
+                    <div class="tech-icon">{{initial}}</div>
+                    <div class="tech-info">
+                        <h4>{{name}}</h4>
+                        <p>{{version}} | {{category}}</p>
+                    </div>
+                </div>
+                {{/technologies}}
+            </div>
+            {{^technologies}}
+            <div class="card">
+                <p style="text-align: center; color: var(--text-muted);">No se detectaron tecnologias</p>
+            </div>
+            {{/technologies}}
+        </section>
+        
+        <!-- Ports Section -->
+        <section class="section">
+            <h2 class="section-title">
+                <svg viewBox="0 0 24 24"><path d="M20 13H4c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1h16c.55 0 1-.45 1-1v-6c0-.55-.45-1-1-1zM7 19c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM20 3H4c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1h16c.55 0 1-.45 1-1V4c0-.55-.45-1-1-1zM7 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>
+                Puertos y Servicios
+            </h2>
+            {{#hasPorts}}
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Puerto</th>
+                            <th>Estado</th>
+                            <th>Servicio</th>
+                            <th>Producto</th>
+                            <th>Version</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#ports}}
+                        <tr>
+                            <td class="mono">{{port}}</td>
+                            <td>
+                                <span class="port-status">
+                                    <span class="port-status-dot"></span>
+                                    {{state}}
+                                </span>
+                            </td>
+                            <td>{{service}}</td>
+                            <td>{{product}}</td>
+                            <td class="mono">{{version}}</td>
+                        </tr>
+                        {{/ports}}
+                    </tbody>
+                </table>
+            </div>
+            {{/hasPorts}}
+            {{^hasPorts}}
+            <div class="card">
+                <p style="text-align: center; color: var(--text-muted);">No se detectaron puertos abiertos</p>
+            </div>
+            {{/hasPorts}}
+        </section>
+        
+        <!-- Directories Section -->
+        <section class="section">
+            <h2 class="section-title">
+                <svg viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg>
+                Directorios Descubiertos
+            </h2>
+            {{#hasDirectories}}
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Ruta</th>
+                            <th>Estado HTTP</th>
+                            <th>Tamano</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#directories}}
+                        <tr>
+                            <td class="mono">{{path}}</td>
+                            <td>
+                                <span class="tag">{{status}}</span>
+                            </td>
+                            <td>{{size}} bytes</td>
+                        </tr>
+                        {{/directories}}
+                    </tbody>
+                </table>
+            </div>
+            {{/hasDirectories}}
+            {{^hasDirectories}}
+            <div class="card">
+                <p style="text-align: center; color: var(--text-muted);">No se descubrieron directorios</p>
+            </div>
+            {{/hasDirectories}}
+        </section>
+        
+        <!-- Exploits Section -->
+        <section class="section">
+            <h2 class="section-title">
+                <svg viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+                Exploits Relacionados (Exploit-DB)
+            </h2>
+            {{#exploits}}
+            <div class="card exploit-card">
+                <div>
+                    <span class="exploit-id">EDB-{{id}}</span>
+                    <span class="tag">{{type}}</span>
+                    <span class="tag">{{platform}}</span>
+                </div>
+                <h4 style="margin: 1rem 0 0.5rem; color: var(--text);">{{title}}</h4>
+                <p class="mono" style="color: var(--text-muted); font-size: 0.875rem;">{{path}}</p>
+            </div>
+            {{/exploits}}
+            {{^exploits}}
+            <div class="card">
+                <p style="text-align: center; color: var(--text-muted);">No se encontraron exploits relacionados</p>
+            </div>
+            {{/exploits}}
+        </section>
+        
+        <!-- Recommendations Section -->
+        <section class="section">
+            <h2 class="section-title">
+                <svg viewBox="0 0 24 24"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7zm2.85 11.1l-.85.6V16h-4v-2.3l-.85-.6C7.8 12.16 7 10.63 7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.63-.8 3.16-2.15 4.1z"/></svg>
+                Recomendaciones de Mitigacion
+            </h2>
+            <div class="card">
+                <h4 style="color: var(--critical); margin-bottom: 1rem;">Prioridad Critica</h4>
+                <ul style="color: var(--text-muted); padding-left: 1.5rem;">
+                    <li>Actualizar todos los componentes con vulnerabilidades conocidas</li>
+                    <li>Aplicar parches de seguridad pendientes</li>
+                    <li>Revisar y corregir configuraciones inseguras</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h4 style="color: var(--high); margin-bottom: 1rem;">Prioridad Alta</h4>
+                <ul style="color: var(--text-muted); padding-left: 1.5rem;">
+                    <li>Implementar headers de seguridad HTTP (CSP, HSTS, X-Frame-Options)</li>
+                    <li>Configurar certificados SSL/TLS correctamente</li>
+                    <li>Revisar permisos de acceso a directorios sensibles</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h4 style="color: var(--medium); margin-bottom: 1rem;">Prioridad Media</h4>
+                <ul style="color: var(--text-muted); padding-left: 1.5rem;">
+                    <li>Ocultar informacion de version de servidores y frameworks</li>
+                    <li>Deshabilitar metodos HTTP innecesarios</li>
+                    <li>Implementar rate limiting en endpoints criticos</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h4 style="color: var(--low); margin-bottom: 1rem;">Mejores Practicas</h4>
+                <ul style="color: var(--text-muted); padding-left: 1.5rem;">
+                    <li>Realizar escaneos de seguridad periodicos</li>
+                    <li>Mantener un inventario actualizado de activos</li>
+                    <li>Implementar monitoreo de seguridad continuo</li>
+                    <li>Capacitar al equipo en seguridad de aplicaciones</li>
+                </ul>
+            </div>
+        </section>
+        
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-warning">
+                <h4>Aviso Legal y Etico</h4>
+                <p>
+                    Este reporte fue generado con fines educativos y de evaluacion de seguridad autorizada. 
+                    El uso de esta informacion para actividades no autorizadas es ilegal y esta prohibido. 
+                    Siempre obten permiso explicito antes de realizar pruebas de seguridad.
+                </p>
+            </div>
+            <p>
+                Generado por <strong>SecureScan Pro</strong> | 
+                Proyecto Academico SENA | 
+                {{generatedDate}}
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

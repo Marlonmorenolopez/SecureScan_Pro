@@ -1,0 +1,56 @@
+# v0 runtime files
+__v0_runtime_loader.js
+__v0_devtools.tsx
+__v0_jsx-dev-runtime.ts
+
+# Common ignores
+node_modules/
+.next/
+.env*.local
+.DS_Store
+
+# Reportes generados (contienen datos sensibles)
+reports/
+*.report.html
+*.report.md
+*.report.pdf
+
+# Variables de entorno
+.env
+.env.local
+.env.production
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+
+# Sistema operativo
+Thumbs.db
+
+# IDE y editores
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Build y cache
+dist/
+build/
+out/
+.cache/
+
+# Testing
+coverage/
+
+# Temporal
+tmp/
+temp/
+
+# Docker
+docker-compose.override.yml
+
+# Certificados y claves (NUNCA commitear)
+*.pem
+*.key
+*.crt

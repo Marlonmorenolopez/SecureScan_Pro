@@ -1,0 +1,211 @@
+# ============================================================================
+# SECURITYSCAN PRO - LABORATORIO VULNERABLE 
+# ============================================================================
+# Laboratorios seleccionados: Juice Shop, DVWA, WebGoat
+# 
+# CRITERIOS DE SELECCIÓN:
+# - Juice Shop: Aplicación moderna (Node.js/Angular), OWASP Top 10 2021, 
+#               mantenida activamente por OWASP, API REST/GraphQL
+# - DVWA: Clásico PHP, niveles de dificultad ajustables, ideal para principiantes
+# - WebGoat: Java, tutoriales interactivos, cobertura amplia de vulnerabilidades
+# ============================================================================
+
+version: '3.8'
+
+services:
+  # ==========================================================================
+  # OWASP JUICE SHOP - Aplicación Moderna de Práctica
+  # ==========================================================================
+  # Puerto: 3001
+  # Stack: Node.js, Express, Angular, SQLite
+  # Características: 
+  #   - OWASP Top 10 2021 completo
+  #   - API REST y GraphQL
+  #   - Desafíos gamificados (1-6 estrellas)
+  #   - Score Board con progreso
+  #   - Soporte multi-idioma
+  # ==========================================================================
+  juice-shop:
+    image: bkimminich/juice-shop:latest
+    container_name: securescan-juice-shop
+    ports:
+      - "3001:3000"
+    environment:
+      - NODE_ENV=unsafe
+      - TZ=America/Bogota
+      # Configuración para facilitar escaneos automatizados
+      - CHALLENGE_SOLVED_WEBHOOK=false
+      - CTF_KEY=securescan-ctf-key
+    volumes:
+      - juice-shop-data:/juice-shop/data
+      # Opcional: persistir configuraciones personalizadas
+      - ./config/juice-shop:/juice-shop/config:ro
+    networks:
+      - securescan-lab
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    labels:
+      - "securescan.lab=juice-shop"
+      - "securescan.difficulty=beginner-to-advanced"
+      - "securescan.owasp-top10=2021"
+      - "securescan.api=true"
+
+  # ==========================================================================
+  # DVWA - Damn Vulnerable Web Application (Clásico)
+  # ==========================================================================
+  # Puerto: 3002
+  # Stack: PHP, MySQL/MariaDB, Apache
+  # Características:
+  #   - Niveles: Low, Medium, High, Impossible
+  #   - Vulnerabilidades clásicas: SQLi, XSS, CSRF, etc.
+  #   - Código fuente visible por nivel
+  #   - Ideal para aprender paso a paso
+  # ==========================================================================
+  dvwa:
+    image: vulnerables/web-dvwa:latest
+    container_name: securescan-dvwa
+    ports:
+      - "3002:80"
+    environment:
+      - MYSQL_HOST=dvwa-db
+      - MYSQL_DATABASE=dvwa
+      - MYSQL_USER=dvwa
+      - MYSQL_PASSWORD=p@ssw0rd
+      - TZ=America/Bogota
+      # Configuración de seguridad reducida para práctica
+      - SECURITY_LEVEL=low
+      - PHPIDS_ENABLED=false
+      - RECAPTCHA_PUBLIC_KEY=
+      - RECAPTCHA_PRIVATE_KEY=
+    depends_on:
+      dvwa-db:
+        condition: service_healthy
+    networks:
+      - securescan-lab
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/login.php"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    labels:
+      - "securescan.lab=dvwa"
+      - "securescan.difficulty=beginner"
+      - "securescan.owasp-top10=2017"
+      - "securescan.php=true"
+
+  # Base de datos para DVWA
+  dvwa-db:
+    image: mariadb:10.6
+    container_name: securescan-dvwa-db
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=dvwa
+      - MYSQL_USER=dvwa
+      - MYSQL_PASSWORD=p@ssw0rd
+      - TZ=America/Bogota
+    volumes:
+      - dvwa-db-data:/var/lib/mysql
+    networks:
+      - securescan-lab
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "dvwa", "-p$MYSQL_PASSWORD"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  # ==========================================================================
+  # OWASP WEBGOAT - Tutorial Interactivo de Seguridad
+  # ==========================================================================
+  # Puerto: 3003
+  # Stack: Java, Spring Boot, WebGoat + WebWolf
+  # Características:
+  #   - Lecciones guiadas con explicaciones
+  #   - WebWolf para interceptar emails/requests
+  #   - Cobertura: Auth, Session Mgmt, Crypto, etc.
+  #   - Apto para principiantes con fundamentos
+  # ==========================================================================
+  webgoat:
+    image: webgoat/webgoat:latest
+    container_name: securescan-webgoat
+    ports:
+      - "3003:8080"
+    environment:
+      - WEBGOAT_PORT=8080
+      - WEBGOAT_SSLENABLED=false
+      - TZ=America/Bogota
+      # Deshabilitar frame options para facilitar iframes en escaneos
+      - WEBGOAT_SECURITY_XFRAMEOPTIONS=false
+    volumes:
+      - webgoat-data:/home/webgoat/.webgoat
+    networks:
+      - securescan-lab
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080/WebGoat"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    labels:
+      - "securescan.lab=webgoat"
+      - "securescan.difficulty=beginner"
+      - "securescan.owasp-top10=2021"
+      - "securescan.tutorial=true"
+
+  # WebWolf - Companion para WebGoat (phishing/email interception)
+  webwolf:
+    image: webgoat/webwolf:latest
+    container_name: securescan-webwolf
+    ports:
+      - "9090:9090"
+    environment:
+      - WEBWOLF_PORT=9090
+      - TZ=America/Bogota
+    networks:
+      - securescan-lab
+    restart: unless-stopped
+    depends_on:
+      - webgoat
+    labels:
+      - "securescan.lab=webwolf"
+      - "securescan.companion=webgoat"
+
+  # ==========================================================================
+  # RED COMPARTIDA
+  # ==========================================================================
+networks:
+  securescan-lab:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
+    labels:
+      - "securescan.network=true"
+
+# ==========================================================================
+# VOLÚMENES PERSISTENTES
+# ==========================================================================
+volumes:
+  juice-shop-data:
+    driver: local
+    labels:
+      - "securescan.volume=juice-shop"
+  
+  dvwa-db-data:
+    driver: local
+    labels:
+      - "securescan.volume=dvwa-db"
+  
+  webgoat-data:
+    driver: local
+    labels:
+      - "securescan.volume=webgoat"
